@@ -1,6 +1,7 @@
 import { IsBoolean, IsInt, IsPhoneNumber, IsString } from 'class-validator';
 import { CoreEntity } from 'src/common/entities/core.entity';
-import { Column, Entity } from 'typeorm';
+import { Location } from 'src/location/entities/location.entity';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 
 @Entity()
 export class DeliveryInfo extends CoreEntity {
@@ -20,7 +21,7 @@ export class DeliveryInfo extends CoreEntity {
   @IsBoolean()
   isRegistered: boolean;
 
-  @Column()
-  @IsString()
-  destination: string;
+  @ManyToOne(() => Location, (location) => location.orders)
+  @JoinColumn({ name: 'locationId' })
+  location: Promise<Location>;
 }

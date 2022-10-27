@@ -5,7 +5,7 @@ import { DeliveryInfoService } from './delivery-info.service';
 import { DeliveryInfo } from './entities/delivery-info.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([DeliveryInfo])],
+  imports: [TypeOrmModule.forFeature([DeliveryInfo, Location])],
   controllers: [DeliveryInfoController],
   providers: [DeliveryInfoService],
 })

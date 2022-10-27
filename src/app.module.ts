@@ -6,6 +6,7 @@ import * as Joi from 'Joi';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DeliveryInfoModule } from './delivery-info/delivery-info.module';
 import { CommonModule } from './common/common.module';
+import { LocationModule } from './location/location.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { CommonModule } from './common/common.module';
     }),
     DeliveryInfoModule,
     CommonModule,
+    LocationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

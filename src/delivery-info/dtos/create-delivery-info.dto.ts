@@ -14,8 +14,8 @@ export class CreateDeliveryInfoInput {
   @IsBoolean()
   isRegistered: boolean;
 
-  @IsString()
-  destination: string;
+  @IsInt()
+  locationId: number;
 }
 
 export class CreateDeliveryInfoOutput extends CoreOutput {
