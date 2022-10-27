@@ -13,5 +13,5 @@ export class Location extends CoreEntity {
     onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'deliveryInfoId' })
-  orders: Promise<DeliveryInfo[]>;
+  orders?: Promise<DeliveryInfo[]>;
 }

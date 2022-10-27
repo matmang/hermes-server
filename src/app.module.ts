@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DeliveryInfoModule } from './delivery-info/delivery-info.module';
 import { CommonModule } from './common/common.module';
 import { LocationModule } from './location/location.module';
+import { SmsModule } from './sms/sms.module';
 
 @Module({
   imports: [
@@ -21,6 +22,9 @@ import { LocationModule } from './location/location.module';
         DB_USERNAME: Joi.string().required(),
         DB_PASSWORD: Joi.string().required(),
         DB_NAME: Joi.string().required(),
+        NCP_ACCESS_KEY: Joi.string().required(),
+        NCP_SERVICE_ID: Joi.string().required(),
+        NCP_SECRET_KEY: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRoot({
@@ -37,6 +41,11 @@ import { LocationModule } from './location/location.module';
     DeliveryInfoModule,
     CommonModule,
     LocationModule,
+    SmsModule.forRoot({
+      accesskey: process.env.NCP_ACCESS_KEY,
+      secretkey: process.env.NCP_SECRET_KEY,
+      service_id: process.env.NCP_SERVICE_ID,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

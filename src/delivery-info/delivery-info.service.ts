@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Location } from 'src/location/entities/location.entity';
+import { SmsService } from 'src/sms/sms.service';
 import { Repository } from 'typeorm';
 import {
   CreateDeliveryInfoInput,
@@ -22,6 +23,7 @@ export class DeliveryInfoService {
     private readonly deliveryinfo: Repository<DeliveryInfo>,
     @InjectRepository(Location)
     private readonly locations: Repository<Location>,
+    private readonly smsService: SmsService,
   ) {}
 
   async createDeliveryInfo(
@@ -40,6 +42,10 @@ export class DeliveryInfoService {
       const newDeliveryInfo = this.deliveryinfo.create(createDeliveryInfoInput);
       newDeliveryInfo.location = Promise.resolve(location);
       const deliveryInfo = await this.deliveryinfo.save(newDeliveryInfo);
+      await this.smsService.sendSMS(
+        createDeliveryInfoInput.receiverPhoneNumber,
+        createDeliveryInfoInput.password,
+      );
       return {
         ok: true,
         deliveryInfoId: deliveryInfo.id,
