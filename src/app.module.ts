@@ -8,6 +8,7 @@ import { DeliveryInfoModule } from './delivery-info/delivery-info.module';
 import { CommonModule } from './common/common.module';
 import { LocationModule } from './location/location.module';
 import { SmsModule } from './sms/sms.module';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { SmsModule } from './sms/sms.module';
       secretkey: process.env.NCP_SECRET_KEY,
       service_id: process.env.NCP_SERVICE_ID,
     }),
+    EventsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
