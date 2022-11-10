@@ -6,7 +6,7 @@ import * as bcrypt from 'bcrypt';
 
 export enum UserRole {
   CLIENT = 'CLIENT',
-  ADMIN = 'ADMIN',
+  OWNER = 'OWNER',
 }
 
 @Entity()
