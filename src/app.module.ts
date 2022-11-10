@@ -1,7 +1,10 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import * as Joi from 'Joi';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DeliveryInfoModule } from './delivery-info/delivery-info.module';
@@ -9,6 +12,10 @@ import { CommonModule } from './common/common.module';
 import { LocationModule } from './location/location.module';
 import { SmsModule } from './sms/sms.module';
 import { EventsModule } from './events/events.module';
+import { UsersModule } from './users/users.module';
+import { JwtModule } from './jwt/jwt.module';
+import { AuthModule } from './auth/auth.module';
+import { JwtMiddleware } from './jwt/jwt.middleware';
 
 @Module({
   imports: [
@@ -48,8 +55,17 @@ import { EventsModule } from './events/events.module';
       service_id: process.env.NCP_SERVICE_ID,
     }),
     EventsModule,
+    UsersModule,
+    JwtModule.forRoot({
+      privateKey: process.env.PRIVATE_KEY,
+    }),
+    AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(JwtMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}
