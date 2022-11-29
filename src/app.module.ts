@@ -16,6 +16,7 @@ import { UsersModule } from './users/users.module';
 import { JwtModule } from './jwt/jwt.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtMiddleware } from './jwt/jwt.middleware';
+import { StoresModule } from './stores/stores.module';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { JwtMiddleware } from './jwt/jwt.middleware';
       privateKey: process.env.PRIVATE_KEY,
     }),
     AuthModule,
+    StoresModule,
   ],
 })
 export class AppModule implements NestModule {

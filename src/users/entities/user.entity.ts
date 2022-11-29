@@ -1,8 +1,9 @@
 import { InternalServerErrorException } from '@nestjs/common';
 import { IsEmail, IsEnum, IsString } from 'class-validator';
 import { CoreEntity } from 'src/common/entities/core.entity';
-import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToOne } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Store } from 'src/stores/entities/stores.entity';
 
 export enum UserRole {
   CLIENT = 'CLIENT',
@@ -17,7 +18,7 @@ export class User extends CoreEntity {
 
   @Column({ select: false })
   @IsString()
-  password?: string;
+  password: string;
 
   @Column({ type: 'enum', enum: UserRole, default: 'CLIENT' })
   @IsEnum(UserRole)
@@ -25,7 +26,13 @@ export class User extends CoreEntity {
 
   @Column({ nullable: true })
   @IsString()
-  phoneNumber: string;
+  phoneNumber?: string;
+
+  @OneToOne(() => Store, (store) => store.owner, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  store: Store;
 
   @BeforeInsert()
   @BeforeUpdate()
