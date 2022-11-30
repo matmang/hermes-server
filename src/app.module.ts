@@ -5,7 +5,7 @@ import {
   RequestMethod,
 } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import * as Joi from 'Joi';
+import * as Joi from 'joi';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DeliveryInfoModule } from './delivery-info/delivery-info.module';
 import { CommonModule } from './common/common.module';

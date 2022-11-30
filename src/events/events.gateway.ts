@@ -11,10 +11,11 @@ import {
 } from '@nestjs/websockets';
 import { Namespace, Socket } from 'socket.io';
 
-@WebSocketGateway({
-  namespace: 'message',
+@WebSocketGateway(8000, {
+  // transports: ['polling'],
+  namespace: 'chat',
   cors: {
-    origin: ['http://localhost:3000'],
+    origin: '*',
   },
 })
 export class EventsGateway
