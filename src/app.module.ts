@@ -17,6 +17,7 @@ import { JwtModule } from './jwt/jwt.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtMiddleware } from './jwt/jwt.middleware';
 import { StoresModule } from './stores/stores.module';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -62,6 +63,7 @@ import { StoresModule } from './stores/stores.module';
     }),
     AuthModule,
     StoresModule,
+    OrdersModule,
   ],
 })
 export class AppModule implements NestModule {

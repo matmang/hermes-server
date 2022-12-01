@@ -30,7 +30,7 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage('events')
   onEvent(client: any, data: any) {
-    console.log("받음");
+    console.log('받음');
     return { event: 'events', data: 'test' };
   }
 
@@ -38,9 +38,13 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   handleMessage(client: any, payload: any): void {
     console.log(payload);
     for (const [key, value] of Object.entries(this.client)) {
-      value.send(
-        "201호실로 배달하세요."
-      );
+      value.send('201호실로 배달하세요.');
+    }
+  }
+
+  initDelivery(event, client: any, data: any) {
+    for (const [key, value] of Object.entries(this.client)) {
+      value.send(data);
     }
   }
 }

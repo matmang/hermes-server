@@ -1,9 +1,17 @@
 import { InternalServerErrorException } from '@nestjs/common';
 import { IsEmail, IsEnum, IsString } from 'class-validator';
 import { CoreEntity } from 'src/common/entities/core.entity';
-import { BeforeInsert, BeforeUpdate, Column, Entity, OneToOne } from 'typeorm';
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+} from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Store } from 'src/stores/entities/stores.entity';
+import { Order } from 'src/orders/entities/order.entity';
 
 export enum UserRole {
   CLIENT = 'CLIENT',
@@ -33,6 +41,11 @@ export class User extends CoreEntity {
     onDelete: 'SET NULL',
   })
   store: Store;
+
+  @OneToMany(() => Order, (order) => order.user, {
+    lazy: true,
+  })
+  orders: Promise<Order[]>;
 
   @BeforeInsert()
   @BeforeUpdate()
