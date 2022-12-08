@@ -15,6 +15,7 @@ import { User } from 'src/users/entities/user.entity';
 import { CreateStoreInput, CreateStoreOutput } from './dtos/create-store.dto';
 import { DeleteStoreOutput } from './dtos/delete-store.dto';
 import { EditStoreInput, EditStoreOutput } from './dtos/edit-store.dto';
+import { ReadOneStoreInput } from './dtos/read-one-store.dto';
 import { StoresInput, StoresOutput } from './dtos/stores.dto';
 import { StoreService } from './stores.service';
 
@@ -34,6 +35,13 @@ export class StoreController {
   @Get('/all')
   async allStores(@Query() storesInput: StoresInput): Promise<StoresOutput> {
     return this.storeService.allStores(storesInput);
+  }
+
+  @Get('/:storeId')
+  async readOneStore(
+    @Param('storeId', new ParseIntPipe()) storeId: number,
+  ): Promise<ReadOneStoreInput> {
+    return this.storeService.readOneStore(storeId);
   }
 
   @Role(['OWNER'])

@@ -18,6 +18,10 @@ export class Store extends CoreEntity {
   @IsString()
   description: string;
 
+  @Column()
+  @IsString()
+  location: string;
+
   @Column('simple-array', { nullable: true })
   @IsString()
   menus?: string[];

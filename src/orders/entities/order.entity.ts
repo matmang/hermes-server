@@ -10,9 +10,14 @@ export class Order extends CoreEntity {
   @IsString({ each: true })
   menus: string[];
 
+  @Column()
+  @IsString()
+  destination: string;
+
   @ManyToOne(() => Store, (store) => store.orders, {
     onDelete: 'CASCADE',
     nullable: false,
+    eager: true,
   })
   @JoinColumn({ name: 'storeId' })
   store: Promise<Store>;
@@ -20,6 +25,7 @@ export class Order extends CoreEntity {
   @ManyToOne(() => User, (user) => user.orders, {
     onDelete: 'CASCADE',
     nullable: false,
+    eager: true,
   })
   @JoinColumn({ name: 'userId' })
   user: Promise<User>;

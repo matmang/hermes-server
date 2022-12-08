@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateStoreInput, CreateStoreOutput } from './dtos/create-store.dto';
 import { DeleteStoreOutput } from './dtos/delete-store.dto';
 import { EditStoreInput, EditStoreOutput } from './dtos/edit-store.dto';
+import { ReadOneStoreOutput } from './dtos/read-one-store.dto';
 import { StoresInput, StoresOutput } from './dtos/stores.dto';
 import { Store } from './entities/stores.entity';
 
@@ -31,6 +32,27 @@ export class StoreService {
     } catch (error) {
       console.log(error);
       return { ok: false, error: 'Could not create Store' };
+    }
+  }
+
+  async readOneStore(storeId: number): Promise<ReadOneStoreOutput> {
+    try {
+      const store = await this.stores.findOne({ where: { id: storeId } });
+      if (!store) {
+        return {
+          ok: false,
+          error: 'Could not find store',
+        };
+      }
+      return {
+        ok: true,
+        store,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error: 'Could not read store',
+      };
     }
   }
 

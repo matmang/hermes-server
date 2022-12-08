@@ -6,6 +6,9 @@ import { Order } from '../entities/order.entity';
 export class CreateOrderInput extends PickType(Order, ['menus']) {
   @IsInt()
   storeId: number;
+
+  @IsString()
+  location: string;
 }
 
 export class CreateOrderOutput extends CoreOutput {

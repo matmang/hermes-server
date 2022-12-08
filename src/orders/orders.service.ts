@@ -42,11 +42,12 @@ export class OrderService {
       }
       const neworder: Order = this.orders.create({
         menus: createOrderInput.menus,
+        destination: createOrderInput.location,
       });
       neworder.user = Promise.resolve(customer);
       neworder.store = Promise.resolve(store);
       const order = await this.orders.save(neworder);
-      this.eventsGateway.initDelivery('message', 'robot', store.name);
+      this.eventsGateway.initDelivery('message', 'robot', order.destination);
       return {
         ok: true,
         orderId: order.id,

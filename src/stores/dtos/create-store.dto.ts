@@ -7,6 +7,9 @@ export class CreateStoreInput extends PickType(Store, [
   'name',
   'description',
   'storeImage',
+  'menus',
+  'menuImages',
+  'location',
 ]) {}
 
 export class CreateStoreOutput extends CoreOutput {
